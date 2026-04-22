@@ -36,6 +36,9 @@ katsuo-bridge = "katsuo.bridge.cli:main"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.pdm.build]
+includes = ["katsuo/"]
+
 [tool.pdm.version]
 source = "scm"
 
