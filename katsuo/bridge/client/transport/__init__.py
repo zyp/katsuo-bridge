@@ -11,6 +11,10 @@ def open_url(url):
         case 'usb': # TODO: specify control/bulk?
             from .usb import UsbTransport
             return UsbTransport(url)
-        
+
+        case 'serial':
+            from . import serial
+            return serial.Transport(u.path)
+
         case _:
             raise ValueError(f"Unsupported URL scheme: {u.scheme}")
