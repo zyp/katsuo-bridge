@@ -1,15 +1,20 @@
 class Register:
-    def __init__(self, offset, *, client = None, path):
+    def __init__(self, offset, *, client = None, path, size):
         self._offset = offset
         self._client = client
-        self.width = 8
+        self.width = 8 * size
         self.path = path
+        self._size = size
     
     async def read(self):
-        return await self._client.read(self._offset)
+        value = 0
+        for i in range(self._size):
+            value |= await self._client.read(self._offset + i) << (8 * i)
+        return value
     
     async def write(self, value):
-        await self._client.write(self._offset, value)
+        for i in range(self._size):
+            await self._client.write(self._offset + i, (value >> (8 * i)) & 0xff)
 
 class _PartialName:
     def __init__(self, parent, name, path):
@@ -83,7 +88,8 @@ class MemoryMap:
             resource_name = tuple(resource['name'])
             if name == resource_name:
                 offset = self._offset + resource['start']
-                return Register(offset = offset, client = self._client, path = self.path + name)
+                size = resource['end'] - resource['start']
+                return Register(offset = offset, client = self._client, path = self.path + name, size = size)
             elif name == resource_name[:len(name)]:
                 return _PartialName(self, name, path = self.path + name)
 

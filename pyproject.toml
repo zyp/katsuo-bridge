@@ -9,7 +9,7 @@ license = {text = "MIT"}
 dependencies = [
     "katsuo-stream",
     "amaranth >= 0.5",
-    "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc.git@5c43cf58f15d9cd9c69ff83c97997708d386b2dc",
+    "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc.git@12a83ad650ae88fcc1b0821a4bb6f4bbf7e19707",
     "click>=8.1.8"
 ]
 requires-python = ">=3.10"

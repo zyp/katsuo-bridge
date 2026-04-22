@@ -8,7 +8,7 @@ def print_recursive(element, level = 0):
     print(f'{' ' * level}{element.path[-1] if element.path else '*'}: ', end = '')
     match element:
         case Register():
-            print('reg')
+            print(f'reg {element.width}b')
         case _:
             print()
             for child in element:
